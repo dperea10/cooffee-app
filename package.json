@@ -1,6 +1,7 @@
 {
   "name": "cooffee",
   "version": "1.0.0",
+  "private": true,
   "description": "App for cooffee - rest",
   "main": "index.js",
   "scripts": {

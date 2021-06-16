@@ -7,8 +7,12 @@ class Server {
     constructor() {
         this.app  = express();
         this.port = process.env.PORT;
-        this.usersPath = '/api/users';
-        this.authPath  = '/api/auth';
+
+        this.paths = {
+            auth:     '/api/auth',
+            user:     '/api/users',
+            category: '/api/category'
+        }
 
         // connection database
         this.connectionDB();
@@ -29,18 +33,18 @@ class Server {
 
         // CORS
         this.app.use( cors() );
-
         // read parser
         this.app.use( express.json() );
-
         // Public directory
         this.app.use( express.static('public') );
 
     }
 
     routes() {
-        this.app.use( this.authPath, require('../routes/auth'));
-        this.app.use( this.usersPath, require('../routes/users'));
+
+        this.app.use( this.paths.auth, require('../routes/auth'));
+        this.app.use( this.paths.user, require('../routes/users'));
+        this.app.use( this.paths.category, require('../routes/category'));
     }
 
     listen() {

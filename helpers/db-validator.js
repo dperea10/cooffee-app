@@ -1,5 +1,6 @@
+const {User, Categories } = require('../models');
 const Role = require('../models/role');
-const User = require('../models/user');
+
 
 //Validate roles
 const isRoleValidate = async (role = '') => {
@@ -16,11 +17,18 @@ const isEmailValidate = async ( email = '' ) => {
     if (emailValidate) throw new Error(`Email ${ email } exist in DB!` );
 }
 
- //Validate ID
+ //Validate ID User
  const isIdValidate = async ( id ) => {
 
     const idValidate = await User.findById(id).exec();
     if ( !idValidate ) throw new Error(`ID ${ id }, not exist!` );
+}
+
+ //Validate ID Category
+ const isIdCategoryValidate = async ( id ) => {
+
+    const idCategoryValidate = await Categories.findById(id).exec();
+    if ( !idCategoryValidate ) throw new Error(`ID ${ id }, not exist!` );
 }
 
 
@@ -28,6 +36,7 @@ const isEmailValidate = async ( email = '' ) => {
 
     isRoleValidate,
     isEmailValidate,
-    isIdValidate
+    isIdValidate,
+    isIdCategoryValidate
 
  }

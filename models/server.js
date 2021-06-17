@@ -11,7 +11,8 @@ class Server {
         this.paths = {
             auth:     '/api/auth',
             user:     '/api/users',
-            category: '/api/category'
+            category: '/api/category',
+            product:  '/api/product'
         }
 
         // connection database
@@ -42,9 +43,10 @@ class Server {
 
     routes() {
 
-        this.app.use( this.paths.auth, require('../routes/auth'));
-        this.app.use( this.paths.user, require('../routes/users'));
-        this.app.use( this.paths.category, require('../routes/category'));
+        this.app.use( this.paths.auth,     require('../routes/auth'));
+        this.app.use( this.paths.user,     require('../routes/users'));
+        this.app.use( this.paths.category, require('../routes/categories'));
+        this.app.use( this.paths.product,  require('../routes/products'));
     }
 
     listen() {

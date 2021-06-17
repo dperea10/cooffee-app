@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const { check }  = require('express-validator');
 
-const { validateFields, validateJWT } = require('../middlewares');
+const { validateFields, 
+        validateJWT,
+        validateAdminRole } = require('../middlewares');
 
-const { isIdCategoryValidate }        = require('../helpers/db-validator');
+const { isIdCategoryValidate } = require('../helpers/db-validator');
 
 const { createCategory,
         getAllCategory,

@@ -1,4 +1,4 @@
-const {User, Categories } = require('../models');
+const {User, Categories, Products } = require('../models');
 const Role = require('../models/role');
 
 
@@ -32,11 +32,20 @@ const isEmailValidate = async ( email = '' ) => {
 }
 
 
+ //Validate ID Products
+ const isIdProductsValidate = async ( id ) => {
+
+    const idProductValidate = await Products.findById(id).exec();
+    if ( !idProductValidate ) throw new Error(`ID ${ id }, not exist!` );
+}
+
+
  module.exports = {
 
     isRoleValidate,
     isEmailValidate,
     isIdValidate,
-    isIdCategoryValidate
+    isIdCategoryValidate,
+    isIdProductsValidate
 
  }

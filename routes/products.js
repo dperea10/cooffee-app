@@ -1,51 +1,53 @@
 const { Router } = require('express');
 const { check }  = require('express-validator');
 
-const { validateFields, validateJWT } = require('../middlewares');
+const { validateFields,
+        validateJWT,
+        validateAdminRole}     = require('../middlewares');
 
-const { isIdProductValidate }        = require('../helpers/db-validator');
+const { isIdProductsValidate, isIdCategoryValidate } = require('../helpers/db-validator');
 
 const { createProduct,
         getAllProduct,
         updateProduct,
         deleteProduct,
-        getIdProduct } = require('../controllers/categories');
-
+        getIdProduct } = require('../controllers/products');
 
 const router = Router();
 
-//get all categories
+//get all Products
 router.get('/', getAllProduct);
 
-//get category for Ids
+//get Products for Ids
 router.get('/:id',[
-    check('id', 'ID Category is no valid!').isMongoId(),
-    check('id').custom( isIdProductValidate ),
+    check('id', 'ID Products is no valid!').isMongoId(),
+    check('id').custom( isIdProductsValidate ),
     validateFields
 ], getIdProduct);
 
-//Create categories
+//Create Products
 router.post('/create', [
     validateJWT,
     check('name', 'Name is empty!').not().isEmpty(),
+    check('category', 'Categoryis not valid!').isMongoId(),
+    check('category').custom( isIdCategoryValidate ),
     validateFields
 ] ,createProduct );
 
-//Update Categories
+//Update Products
 router.put('/:id', [
     validateJWT,
-    check('id', 'ID Category is no valid!').isMongoId(),
-    check('name', 'Name is empty!').not().isEmpty(),
-    check('id').custom( isIdProductValidate ),
+    check('category', 'Categoryis not valid!').isMongoId(),
+    check('id').custom( isIdProductsValidate ),
     validateFields
 ], updateProduct );
 
-// Delete Category 
+// Delete Products 
 router.delete('/:id',[
     validateJWT,
     validateAdminRole,
     check('id', 'ID is no valid!').isMongoId(),
-    check('id').custom( isIdProductValidate ),
+    check('id').custom( isIdProductsValidate ),
     validateFields
 
 ], deleteProduct );

@@ -14,10 +14,16 @@ const CategoriesSchema = Schema({
     },
     user: {
         type:     Schema.Types.ObjectId,
-        ref:      'User',
+        ref:      'Users',
         required: true
     }
 
 });
+
+CategoriesSchema.methods.toJSON = function () {
+
+    const { __v, status, ...categories } = this.toObject();
+    return categories;
+}
 
 module.exports = model('Categories', CategoriesSchema );
